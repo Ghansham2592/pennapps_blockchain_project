@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>Spectral by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+  </head>
+  <body>
+    
+    <header id="header" class="alt">
+            <h1><a href="index.html">Vena Codex</a></h1>
+            <nav id="nav">
+              <ul>
+                <li class="special">
+                  <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                  <div id="menu">
+                    <ul>
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="generic.html">Generic</a></li>
+                      <li><a href="elements.html">Elements</a></li>
+                      <li><a href="#">Sign Up</a></li>
+                      <li><a href="#">Log In</a></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </nav>
+          </header>
+    <div id="app">
+      <div class="sidebar">
+        <section class="cameras">
+          <h2>Cameras</h2>
+          <ul>
+            <li v-if="cameras.length === 0" class="empty">No cameras found</li>
+            <li v-for="camera in cameras">
+              <span v-if="camera.id == activeCameraId" :title="formatName(camera.name)" class="active">{{ formatName(camera.name) }}</span>
+              <span v-if="camera.id != activeCameraId" :title="formatName(camera.name)">
+                <a @click.stop="selectCamera(camera)">{{ formatName(camera.name) }}</a>
+              </span>
+            </li>
+          </ul>
+        </section>
+        <section class="scans">
+          <h2>Scans</h2>
+          <ul v-if="scans.length === 0">
+            <li class="empty">No scans yet</li>
+          </ul>
+          <transition-group name="scans" tag="ul">
+            <li v-for="scan in scans" :key="scan.date" :title="scan.content">{{ scan.content }}</li>
+          </transition-group>
+        </section>
+      </div>
+      <div class="preview-container">
+        <video id="preview"></video>
+      </div>
+    </div>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
